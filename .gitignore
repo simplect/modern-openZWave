@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+#OpenZwave specific stuff
+OZW_Log.txt
+zwscene.xml
+zwcfg*
+ModernOZW
