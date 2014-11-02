@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     using namespace OpenZWave;
     std::cout << "Initializing OpenZWave" << std::endl;
     //Create the OpenZwave manager
+    Options::Create("/etc/openzwave", "", "");
     Options::Get()->AddOptionBool("ConsoleOutput", false);
     Options::Get()->Lock();
     Manager::Create();
@@ -158,7 +159,7 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
 #if DEBUG
                 std::string valueString = "";
                 Manager::Get()->GetValueAsString(value, &valueString);
-                std::cout << "Got a new value from node" << node->m_nodeId
+                std::cout << "Got a new value from node " << (int)node->m_nodeId
                     << " Name: " << Manager::Get()->GetValueLabel(value)
                     << " Value: " << valueString << std::endl;
 #endif
@@ -192,8 +193,8 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
             if(auto node = getNode(notification->GetNodeId())){
                 uint8_t value = notification->GetEvent();
 #if DEBUG
-                std::cout << "Got a new node event from node" << node->m_nodeId
-                    << " event value: " << value << std::endl;
+                std::cout << "Got a new node event from node " << (int)node->m_nodeId
+                    << " event value: " << (int)value << std::endl;
 #endif
                 if(value == 255){
                     node->high(notification);

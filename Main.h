@@ -14,7 +14,7 @@ namespace Modernozw {
     uint32_t g_homeId = 0;
     bool g_initFailed = false;
     bool g_runMainThread = true; //If set to false it will break the main loop
-    uint8_t g_pollTime = 10; //Amount of seconds delay between each poll
+    uint8_t g_pollTime = 30; //Amount of seconds delay between each poll
     std::map <uint8_t, Node*> g_nodes;
     std::recursive_mutex g_criticalSection;
     std::condition_variable g_condInit;

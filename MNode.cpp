@@ -37,7 +37,7 @@ namespace Modernozw {
         for (auto it = m_values.begin(); it != m_values.end(); ++it) {
             ValueID valueId = *it;
             if (valueId.GetCommandClassId() == 0x25) {
-                Manager::Get()->SetValue(valueId, value);
+                Manager::Get()->SetValue(valueId, true);
                 break;
             }
         }
@@ -45,11 +45,15 @@ namespace Modernozw {
 
     void Node::setValue(bool value)
     {
-        if(value){
-            setValue(m_high);
-        } else {
-            setValue(m_low);
+        using namespace OpenZWave;
+        for (auto it = m_values.begin(); it != m_values.end(); ++it) {
+            ValueID valueId = *it;
+            if (valueId.GetCommandClassId() == 0x25) {
+                Manager::Get()->SetValue(valueId, value);
+                break;
+            }
         }
+
     }
 
     Node* getNode(uint8_t nodeId)
