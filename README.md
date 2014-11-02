@@ -1,4 +1,4 @@
-openzwave-
+Modern-openZWave
 ==========
 
 A modern implementation of the openzwave library in C++11
