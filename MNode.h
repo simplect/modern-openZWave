@@ -1,12 +1,11 @@
 #ifndef _NODE_HEADER_
 #define _NODE_HEADER_
 
-#include "Main.h"
-
+#include <list>
 #include "ValueStore.h"
 #include "Notification.h"
 
-namespace modernozw {
+namespace Modernozw {
 
     class Node {
         private:

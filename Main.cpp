@@ -29,7 +29,7 @@
 #include <iostream>
 
 #include "Main.h"
-#include "MNode.h"
+#include "MNode.cpp" //Todo: fix makefile so we can change this to .h
 //openZWave imports
 #include "Options.h"
 #include "Manager.h"
@@ -94,7 +94,7 @@ void mainThread()
         if(i >= g_pollTime){
             i = 0;
             for(auto &it : g_nodes){
-                OpenZWave::Manager::Get()->RefreshNodeInfo(g_homeId, it.second.m_nodeId);
+                OpenZWave::Manager::Get()->RefreshNodeInfo(g_homeId, it.second->m_nodeId);
             }
         }
         sleep(1);
@@ -132,9 +132,9 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         case Notification::Type_ValueRemoved:
         {
             if(auto node = getNode(notification->GetNodeId())){
-                for(auto &it : node->m_values){
-                    if(it == notification->GetValueID()){
-                        node->m_values.erase(&it);
+                for(auto it = node->m_values.begin(); it != node->m_values.end(); ++it){
+                    if((*it) == notification->GetValueID()){
+                        node->m_values.erase(it);
                         break;
                     }
                 }
@@ -147,16 +147,20 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
             if(auto node = getNode(notification->GetNodeId())){
                 ValueID value = notification->GetValueID();
                 //Remove the old value
-                for(auto &it : node->m_values){
-                    if((*it) == value){
+                for(auto it = node->m_values.begin(); it != node->m_values.end(); ++it){
+                    if((*it) == notification->GetValueID()){
                         node->m_values.erase(it);
+                        break;
                     }
                 }
+
                 node->m_values.push_back(value);
 #if DEBUG
+                std::string valueString = "";
+                Manager::Get()->GetValueAsString(value, &valueString);
                 std::cout << "Got a new value from node" << node->m_nodeId
-                    << " Name: " << Manager::GetValueLabel(value)
-                    << " Value: " << Manager::GetValueAsString(value) << std::endl;
+                    << " Name: " << Manager::Get()->GetValueLabel(value)
+                    << " Value: " << valueString << std::endl;
 #endif
                 break;
             }
@@ -166,9 +170,9 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         case Notification::Type_NodeAdded:
         {
             //Create a new node and add it with a id to the map
-            Modernozw::Node node =
-                new Modernozw::Node(notification->GetNodeId(), notification->GetHomeId());
-            g_nodes.insert(std::make_pair(node.m_nodeId, node));
+            Modernozw::Node *node = new Modernozw::Node(
+                    notification->GetNodeId(), notification->GetHomeId());
+            g_nodes.insert(std::make_pair(node->m_nodeId, node));
             break;
         }
 

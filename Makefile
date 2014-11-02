@@ -26,10 +26,10 @@ LIBS = $(wildcard /usr/lib/libopenzwave.so)
 %.o : %.cpp
 	$(CXX) $(CFLAGS) $(INCLUDES) -o $@ $<
 
-all: ZServer
+all: ModernOZW
 
-ZServer:	Main.o
+ModernOZW:	Main.o
 	$(LD) -o $@ $(LDFLAGS) Main.o $(LIBS) -ldl -lm 
 	
 clean:
-	rm -f ZServer *.o
+	rm -f ModernOZW *.o

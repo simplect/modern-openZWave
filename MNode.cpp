@@ -1,19 +1,21 @@
 #include <stdint.h>
+#include <condition_variable>
 #include "ValueStore.h"
 #include "Notification.h"
+#include "Manager.h"
 
 #include "MNode.h"
 #include "Main.h"
 
 namespace Modernozw {
 
-    Node(uint8_t nodeId, uint32_t homeId)
+    Node::Node(uint8_t nodeId, uint32_t homeId)
     {
         m_nodeId = nodeId;
         m_homeId = homeId;
     }
 
-    Node(uint8_t nodeId)
+    Node::Node(uint8_t nodeId)
     {
         m_nodeId = nodeId;
         m_homeId = g_homeId;
@@ -31,13 +33,12 @@ namespace Modernozw {
 
     void Node::setValue(uint8_t value)
     {
-        if (m_nodeInfo->m_nodeId == node) {
-            for (auto it = m_values.begin(); it != m_values.end(); ++it) {
-                ValueID valueId = *it;
-                if (valueId.GetCommandClassId() == 0x25) {
-                    Manager::Get()->SetValue(valueId, value);
-                    break;
-                }
+        using namespace OpenZWave;
+        for (auto it = m_values.begin(); it != m_values.end(); ++it) {
+            ValueID valueId = *it;
+            if (valueId.GetCommandClassId() == 0x25) {
+                Manager::Get()->SetValue(valueId, value);
+                break;
             }
         }
     }
@@ -61,7 +62,7 @@ namespace Modernozw {
         }
     }
 
-    Node* getNode(ozw::Notification const* _notification)
+    Node* getNode(OpenZWave::Notification const* _notification)
     {
         uint8_t const nodeId = _notification->GetNodeId();
         return getNode(nodeId);
