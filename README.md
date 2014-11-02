@@ -3,7 +3,7 @@ openzwave-
 
 A modern implementation of the openzwave library in C++11
 
-This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile (has it's embedded license) fall under the following license.
+This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile fall under the following license.
 
 
 
