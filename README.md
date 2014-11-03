@@ -7,8 +7,9 @@ This project is a full rewrite of the MinOZW example in the OpenZWave library. T
 
 Installation:
 -----
-    For ubuntu/debian users install this:
-        - sudo apt-get install subversion libudev-dev
+For ubuntu/debian users install this:
+        
+    sudo apt-get install subversion libudev-dev
 
 Then run ./install.sh (this assumes you are using sudo). 
 After installing you have the ModernOZW executable :)
