@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     using namespace OpenZWave;
     std::cout << "Initializing OpenZWave" << std::endl;
     //Create the OpenZwave manager
-    Options::Create("/etc/openzwave", "", "");
+    Options::Create("open-zwave/config/", "", "");
     Options::Get()->AddOptionBool("ConsoleOutput", false);
     Options::Get()->Lock();
     Manager::Create();
