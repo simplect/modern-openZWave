@@ -12,7 +12,10 @@ For ubuntu/debian users install this:
     sudo apt-get install subversion libudev-dev
 
 Then run ./install.sh (this assumes you have sudo installed and sudo rights on the current user). 
-After installing you have the ModernOZW executable :) The installation (compilation) might take some time on devices like the Raspberry pi.
+After installing you have the ModernOZW executable :) The installation (compilation) might take some time on devices
+like the Raspberry pi.
+
+If you have already installed open-zwave you can copy the compiled directory to the modern-openZWave directory or you can specify the header files and the library in the src/Makefile.
 
 Todo:
 -----
