@@ -6,9 +6,13 @@ A modern implementation of the openzwave library in C++11
 This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile fall under the following license.
 
 Todo:
-    -Comment and document code
-    -Complete the hook system
-    -Json communication to other programs
+
+Comment and document code
+
+Complete the hook system
+
+Json communication to other programs
+    
 
 
 
