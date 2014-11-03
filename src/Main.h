@@ -26,6 +26,7 @@
 #include <string>
 #include <list>
 #include <mutex>
+#include <condition_variable>
 #include <vector>
 #include "ValueStore.h"
 #include "Notification.h"
@@ -42,10 +43,10 @@ namespace Modernozw {
 
 }
 //Threads
-
-    void mainThread();
-    void controlThread();
-    //Hooks hooked to openzwave
-    void onNotification(OpenZWave::Notification const* _notification, void* _context);
+int start(std::string = "/dev/ttyUSB0");
+void mainThread();
+void controlThread();
+//Hooks hooked to openzwave
+void onNotification(OpenZWave::Notification const* _notification, void* _context);
 
 #endif

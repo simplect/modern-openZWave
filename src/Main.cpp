@@ -47,6 +47,15 @@ using namespace Modernozw;
 
 int main(int argc, char *argv[])
 {
+    if(argc > 1)
+        return start(argv[1]);
+    else {
+        return start();
+    }
+}
+
+int start(std::string port)
+{
     using namespace OpenZWave;
     std::cout << "Initializing OpenZWave" << std::endl;
     //Create the OpenZwave manager
@@ -59,7 +68,6 @@ int main(int argc, char *argv[])
     Manager::Get()->AddWatcher(onNotification, NULL);
 
     //Add the driver
-    string port = (argc > 1) ? argv[1] : "/dev/ttyUSB0";
     Manager::Get()->AddDriver(port);
 
     //Wait for the manager and driver to complete initializing
