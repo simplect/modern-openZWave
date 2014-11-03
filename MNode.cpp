@@ -44,12 +44,12 @@ namespace Modernozw {
 
     void Node::high(const OpenZWave::Notification * _notification)
     {
-
+        Modernozw::setValue(8, true);
     }
 
     void Node::low(const OpenZWave::Notification * _notification)
     {
-
+        Modernozw::setValue(8, false);
     }
 
     void Node::setValue(uint8_t value)
@@ -107,6 +107,7 @@ namespace Modernozw {
     {
         g_criticalSection.lock();
         Node * node = getNode(nodeId);
+        if(node == nullptr)
             return;
         node->setValue(value);
         g_criticalSection.unlock();

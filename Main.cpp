@@ -27,6 +27,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <sys/resource.h>
+#include <math.h>
 
 #include "Main.h"
 #include "MNode.cpp" //Todo: fix makefile so we can change this to .h
@@ -77,10 +79,39 @@ int main(int argc, char *argv[])
         std::thread firstThread(mainThread);
         std::thread secondThread(controlThread);
         secondThread.detach();
-        firstThread.join();
+        firstThread.detach();
+
+        //Watch the CPU usage of this process
+        //if we hit 100% for a few seconds
+        //then we might have a failing openZWave driver
+        int iterations = 0;
+        uint32_t numUsage = 0;
+        while(true){
+            if(iterations == 4){
+                //Hit the fourth time we got a billion on numUsage
+                //Here we could implement a restarter or anything else
+#if DEBUG
+                std::cout << "Terminating, the openZWave driver got stuck"
+                    << " in a loop and is wasting resources" << std::endl;
+#endif
+
+
+                break;
+            }
+            struct rusage usage;
+            struct timeval start, end;
+            getrusage(RUSAGE_SELF, &usage);
+            start = usage.ru_utime;
+            sleep(2);
+            getrusage(RUSAGE_SELF, &usage);
+            end = usage.ru_utime;
+            numUsage = (end.tv_usec - start.tv_usec);
+            if(numUsage > pow(10, 9)){
+                iterations++;
+            }
+        }
     }
 
-    Manager::Destroy();
     if(g_initFailed)
         return 1;
     else
