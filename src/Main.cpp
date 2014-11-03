@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
         //then we might have a failing openZWave driver
         int iterations = 0;
         uint32_t numUsage = 0;
+        uint32_t maxUsage = pow(10, 9);
         while(true){
             if(iterations == 4){
                 //Hit the fourth time we got a billion on numUsage
@@ -94,8 +95,6 @@ int main(int argc, char *argv[])
                 std::cout << "Terminating, the openZWave driver got stuck"
                     << " in a loop and is wasting resources" << std::endl;
 #endif
-
-
                 break;
             }
             struct rusage usage;
@@ -106,7 +105,7 @@ int main(int argc, char *argv[])
             getrusage(RUSAGE_SELF, &usage);
             end = usage.ru_utime;
             numUsage = (end.tv_usec - start.tv_usec);
-            if(numUsage > pow(10, 9)){
+            if(numUsage > maxUsage){
                 iterations++;
             }
         }
@@ -185,7 +184,6 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
                         break;
                     }
                 }
-
                 node->m_values.push_back(value);
 #if DEBUG
                 std::string valueString = "";

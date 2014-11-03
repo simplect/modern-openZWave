@@ -17,11 +17,9 @@ CFLAGS  := -c $(DEBUG_CFLAGS) -std=gnu++11
 LDFLAGS := $(DEBUG_LDFLAGS)
 
 #Configurate the location of the openzwave headerfiles here
-#INCLUDES        := -I ../../../src -I ../../../src/command_classes/ -I ../../../src/value_classes/ \
-#        -I ../../../src/platform/ -I ../../../h/platform/unix -I ../../../tinyxml/ -I ../../../hidapi/hidapi/   
-INCLUDES        := -I /usr/include/openzwave/command_classes/ -I /usr/include/openzwave/value_classes/ -I /usr/include/openzwave/ -I /usr/include/openzwave/platform/
+INCLUDES        := -I ../../open-zwave/cpp/src/command_classes/ -I ../open-zwave/cpp/src/value_classes/ -I ../open-zwave/cpp/src/ -I ../open-zwave/cpp/src/platform/
 #Configurate the location of libopenzwave.so here
-LIBS = $(wildcard /usr/lib/libopenzwave.so)
+LIBS = ../open-zwave/libopenzwave.so
 
 %.o : %.cpp
 	$(CXX) $(CFLAGS) $(INCLUDES) -o $@ $<
