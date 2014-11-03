@@ -12,7 +12,7 @@ For ubuntu/debian users install this:
     sudo apt-get install subversion libudev-dev
 
 Then run ./install.sh (this assumes you have sudo installed and sudo rights on the current user). 
-After installing you have the ModernOZW executable :) The installation (compilation) might take some time on devices like the Raspberry Pi.
+After installing you have the ModernOZW executable :) The installation (compilation) might take some time on devices like the Raspberry pi.
 
 Todo:
 -----
