@@ -10,6 +10,7 @@ Working:
 
 Todo:
 -----
+- Test the installation script on Debian, Automate zeromq installation on non archlinux distro's
 - Comment and document code
 - Complete the hook system
 
