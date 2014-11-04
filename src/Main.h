@@ -40,10 +40,8 @@ namespace Modernozw {
     std::map <uint8_t, Node*> g_nodes;
     std::recursive_mutex g_criticalSection;
     std::condition_variable g_condInit;
-
 }
 //Threads
-int start(std::string = "/dev/ttyUSB0");
 void mainThread();
 void controlThread();
 //Hooks hooked to openzwave
