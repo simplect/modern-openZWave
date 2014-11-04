@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
     if(!g_initFailed){
         std::cout << "Sucessfully initialized OpenZWave" << std::endl;
-
+        sendMessage(0, g_homeId, "init", "init", "true");
         //Write the config
         Manager::Get()->WriteConfig(g_homeId);
         Driver::DriverData data;

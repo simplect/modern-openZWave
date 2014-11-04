@@ -46,7 +46,6 @@ namespace Modernozw {
 
     void Node::nodeEvent(const OpenZWave::Notification *notification)
     {
-        Modernozw::setValue(8, true);
         std::stringstream value;
         value << (int)notification->GetEvent();
         sendMessage(m_nodeId, m_homeId, "event", "", value.str());
