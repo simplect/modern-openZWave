@@ -2,6 +2,17 @@ Modern-openZWave
 ==========
 
 A modern implementation of the openzwave library in C++11
+Working:
+-----
+- Getting values from nodes
+- Setting values in nodes
+- JSON control through zeromq (see the python directory for receive and set examples)
+
+Todo:
+-----
+- Comment and document code
+- Complete the hook system
+
 
 This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile fall under the following license.
 
@@ -17,11 +28,7 @@ like the Raspberry pi.
 
 If you have already installed open-zwave you can copy the compiled directory to the modern-openZWave directory or you can specify the header files and the library in the src/Makefile.
 
-Todo:
------
-- Comment and document code
-- Complete the hook system
-- Json communication to other programs through zeromq
+
 
 License:
 -----
