@@ -1,7 +1,14 @@
 Modern-openZWave
 ==========
 
-A modern implementation of the openzwave library in C++11
+A modern implementation of the openzwave library in C++11 which implements a JSON frontend controlled through zeromq which delivers a easy to use socket over TCP, IPC and more. 
+
+Currently, the data send from the modernozw(modern-openZWave) server are dead simple to parse and understand, you just need to know what an nodeID, homeID and the specifications of the node itself are. The controll set currently includes the following commands (soon to be extended if neccesary)
+        
+        {'symbol':'zwave', 'homeid':1, 'nodeid' : 1, 'value': True}
+Which (suprise, suprise) sets the switch value of node 1 in home 1 to True. Currently we do not support an extensive set of openZWave commands and I highly encourage you to use https://www.domotiga.nl/ or https://code.google.com/p/openzwave-control-panel/ for extensive debugging of the node/home settings. I will however add bindings for the command set in the coming week.
+
+
 Working:
 -----
 - Getting values from nodes
