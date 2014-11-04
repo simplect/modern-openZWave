@@ -25,7 +25,7 @@ Todo:
 - Complete the hook system
 
 
-This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile fall under the following license.
+This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile, jsoncpp library and the openzwave library fall under the following license.
 
 Installation:
 -----
