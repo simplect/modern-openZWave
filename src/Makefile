@@ -17,7 +17,7 @@ CFLAGS  := -c $(DEBUG_CFLAGS) -std=gnu++11
 LDFLAGS := $(DEBUG_LDFLAGS)
 
 #Configurate the location of the openzwave headerfiles here
-INCLUDES        := -I ../../open-zwave/cpp/src/command_classes/ -I ../open-zwave/cpp/src/value_classes/ -I ../open-zwave/cpp/src/ -I ../open-zwave/cpp/src/platform/
+INCLUDES        := -I jsoncpp/ -I ../open-zwave/cpp/src/command_classes/ -I ../open-zwave/cpp/src/value_classes/ -I ../open-zwave/cpp/src/ -I ../open-zwave/cpp/src/platform/
 #Configurate the location of libopenzwave.so here
 LIBS = ../open-zwave/libopenzwave.so
 
@@ -26,8 +26,8 @@ LIBS = ../open-zwave/libopenzwave.so
 
 all: ModernOZW
 
-ModernOZW:	Main.o
-	$(LD) -o $@ $(LDFLAGS) Main.o $(LIBS) -ldl -lm 
+ModernOZW:	Main.o jsoncpp/jsoncpp.o
+	$(LD) -o $@ $(LDFLAGS) Main.o jsoncpp/jsoncpp.o $(LIBS) -ldl -lm -lzmq
 	
 clean:
 	rm -f ModernOZW *.o

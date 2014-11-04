@@ -21,12 +21,14 @@
 
 #include <stdint.h>
 #include <condition_variable>
+#include <sstream>
 #include "ValueStore.h"
 #include "Notification.h"
 #include "Manager.h"
 
 #include "MNode.h"
 #include "Main.h"
+#include "Server.h"
 
 namespace Modernozw {
 
@@ -42,14 +44,34 @@ namespace Modernozw {
         m_homeId = g_homeId;
     }
 
-    void Node::high(const OpenZWave::Notification * _notification)
+    void Node::nodeEvent(const OpenZWave::Notification *notification)
     {
         Modernozw::setValue(8, true);
+        std::stringstream value;
+        value << (int)notification->GetEvent();
+        sendMessage(m_nodeId, "event", "", value.str());
     }
 
-    void Node::low(const OpenZWave::Notification * _notification)
+    void Node::valueChanged(const OpenZWave::Notification *notification)
     {
-        Modernozw::setValue(8, false);
+        using namespace OpenZWave;
+        ValueID value = notification->GetValueID();
+        //Remove the old value
+        for(auto it = m_values.begin(); it != m_values.end(); ++it){
+            if((*it) == notification->GetValueID()){
+                m_values.erase(it);
+                break;
+            }
+        }
+        m_values.push_back(value);
+
+        std::string valueString = "";
+        Manager::Get()->GetValueAsString(value, &valueString);
+        sendMessage(
+                m_nodeId,
+                "valuechanged",
+                Manager::Get()->GetValueLabel(value),
+                valueString);
     }
 
     void Node::setValue(uint8_t value)

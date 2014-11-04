@@ -32,6 +32,7 @@
 
 #include "Main.h"
 #include "MNode.cpp" //Todo: fix makefile so we can change this to .h
+#include "Server.cpp"
 //openZWave imports
 #include "Options.h"
 #include "Manager.h"
@@ -42,11 +43,14 @@
 #include "ValueStore.h"
 #include "Value.h"
 #include "ValueBool.h"
+void cvlueChanged(const OpenZWave::Notification * notification);
 
 using namespace Modernozw;
 
 int main(int argc, char *argv[])
 {
+    //Starting zeromq server
+    startServer();
     using namespace OpenZWave;
     std::cout << "Initializing OpenZWave" << std::endl;
     //Create the OpenZwave manager
@@ -77,7 +81,7 @@ int main(int argc, char *argv[])
 
         //Start the threads
         std::thread firstThread(mainThread);
-        std::thread secondThread(controlThread);
+        std::thread secondThread(serverThread);
         secondThread.detach();
         firstThread.detach();
 
@@ -176,22 +180,7 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         case Notification::Type_ValueChanged:
         {
             if(auto node = getNode(notification->GetNodeId())){
-                ValueID value = notification->GetValueID();
-                //Remove the old value
-                for(auto it = node->m_values.begin(); it != node->m_values.end(); ++it){
-                    if((*it) == notification->GetValueID()){
-                        node->m_values.erase(it);
-                        break;
-                    }
-                }
-                node->m_values.push_back(value);
-#if DEBUG
-                std::string valueString = "";
-                Manager::Get()->GetValueAsString(value, &valueString);
-                std::cout << "Got a new value from node " << (int)node->m_nodeId
-                    << " Name: " << Manager::Get()->GetValueLabel(value)
-                    << " Value: " << valueString << std::endl;
-#endif
+                node->valueChanged(notification);
                 break;
             }
             break;
@@ -220,16 +209,7 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         case Notification::Type_NodeEvent:
         {
             if(auto node = getNode(notification->GetNodeId())){
-                uint8_t value = notification->GetEvent();
-#if DEBUG
-                std::cout << "Got a new node event from node " << (int)node->m_nodeId
-                    << " event value: " << (int)value << std::endl;
-#endif
-                if(value == 255){
-                    node->high(notification);
-                } else if(value == 0){
-                    node->low(notification);
-                }
+                node->nodeEvent(notification);
             }
             break;
         }

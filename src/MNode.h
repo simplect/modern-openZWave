@@ -42,8 +42,8 @@ namespace Modernozw {
             Node(uint8_t m_nodeId);
 
             //Hooks which are called by the notification thread
-            void high(const OpenZWave::Notification * _notification);
-            void low(const OpenZWave::Notification * _notification);
+            void nodeEvent(const OpenZWave::Notification *notification);
+            void valueChanged(const OpenZWave::Notification *notification);
             //Setters
             void setValue(uint8_t value);
             void setValue(bool value);
