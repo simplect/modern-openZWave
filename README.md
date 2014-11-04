@@ -9,11 +9,14 @@ Currently, the data send from the modernozw(modern-openZWave) server are dead si
 Which (suprise, suprise) sets the switch value of node 1 in home 1 to True. Currently we do not support an extensive set of openZWave commands and I highly encourage you to use https://www.domotiga.nl/ or https://code.google.com/p/openzwave-control-panel/ for extensive debugging of the node/home settings. I will however add bindings for the command set in the coming week.
 
 
-Working:
+Features/Working:
 -----
-- Getting values from nodes
-- Setting values in nodes
-- JSON control through zeromq (see the python directory for receive and set examples)
+- Getting values from nodes.
+- Setting values in nodes.
+- JSON control through zeromq (see the python directory for receive and set examples).
+- When the zwave adapter is detached we automatically exit, default openzwave implementations do not.
+- Install script for compiling openZWave and Modern-openZWave
+
 
 Todo:
 -----

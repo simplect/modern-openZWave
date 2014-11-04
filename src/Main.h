@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------
-// main.h
+// Main.h
 // modern-openZWave is a modern and optimized implementation
 // of the openZWave library
 // Copyright (C) 2014  Merijn Testroote
