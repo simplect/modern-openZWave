@@ -21,7 +21,7 @@ Todo:
 -----
 - Comment and document code
 - Complete the hook system
-- Json communication to other programs
+- Json communication to other programs through zeromq
 
 License:
 -----
