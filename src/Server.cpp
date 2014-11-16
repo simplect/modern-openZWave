@@ -72,8 +72,8 @@ namespace Modernozw {
             std::string value)
     {
             Json::Value message;
-            message["nodeid"] = nodeId;
-            message["homeid"] = homeId;
+            message["node_id"] = nodeId;
+            message["home_id"] = homeId;
             message["type"] = type;
             message["name"] = name;
             message["value"] = value;
