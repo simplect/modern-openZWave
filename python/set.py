@@ -7,7 +7,7 @@ if __name__ == "__main__":
     flip = False
 while True:
     time.sleep(3)
-    socket.send_json({'symbol':'zwave', 'homeid':23194408, 'nodeid' : 8, 'value': flip})
+    socket.send_json({'symbol':'zwave', 'home_id':23194408, 'node_id' : 8, 'value': flip})
     if flip:
         flip = False
     else:

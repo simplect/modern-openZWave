@@ -53,11 +53,11 @@ namespace Modernozw {
                 continue;
             }
 
-            if(jsonRequest["homeid"].asInt() != (int)g_homeId){
+            if(jsonRequest["home_id"].asInt() != (int)g_homeId){
                 continue;
             }
             Node * node;
-            if(!(node = getNode(jsonRequest["nodeid"].asInt()))){
+            if(!(node = getNode(jsonRequest["node_id"].asInt()))){
                 continue;
             }
             node->setValue(jsonRequest["value"].asBool());
