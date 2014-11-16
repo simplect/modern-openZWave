@@ -1,7 +1,7 @@
 Modern-openZWave
 ==========
 
-A modern implementation of the openzwave library in C++11 which implements a JSON frontend controlled through zeromq which delivers a easy to use socket over TCP, IPC and more. 
+A modern implementation of the openzwave library in C++11 which implements a JSON frontend controlled through zeromq who delivers a easy to use socket over TCP, IPC and more. 
 
 Currently, the data send from the modernozw(modern-openZWave) server are dead simple to parse and understand, you just need to know what an nodeID, homeID and the specifications of the node itself are. The controll set currently includes the following commands (soon to be extended if neccesary)
         
@@ -25,8 +25,6 @@ Todo:
 - Complete the hook system
 
 
-This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile fall under the following license.
-
 Installation:
 -----
 For ubuntu/debian users install this:
@@ -40,9 +38,9 @@ like the Raspberry pi.
 If you have already installed open-zwave you can copy the compiled directory to the modern-openZWave directory or you can specify the header files and the library in the src/Makefile.
 
 
-
 License:
 -----
+This project is a full rewrite of the MinOZW example in the OpenZWave library. The idea is to allow programmers to quickly implement this and use ZWave without any troubles. All the including files EXCEPT the Makefile, jsoncpp library and the openzwave library fall under the following license.
 
 
     Copyright (C) 2014  Merijn Testroote
