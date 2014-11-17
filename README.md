@@ -1,6 +1,9 @@
 Modern-openZWave
 ==========
 
+Voor de HVA’ers:
+    Ik doe vanavond de afronding van het install script
+
 A modern implementation of the openzwave library in C++11 which implements a JSON frontend controlled through zeromq who delivers a easy to use socket over TCP, IPC and more. 
 
 Currently, the data send from the modernozw(modern-openZWave) server are dead simple to parse and understand, you just need to know what an nodeID, homeID and the specifications of the node itself are. The controll set currently includes the following commands (soon to be extended if neccesary)
