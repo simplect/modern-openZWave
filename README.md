@@ -1,8 +1,9 @@
+**Voor de HVA’ers:**
+                
+Ik doe vanavond de afronding van het install script. Ik zal ook geoptimaliseerde binaries voor rasbian uploaden
+
 Modern-openZWave
 ==========
-
-Voor de HVA’ers:
-        Ik doe vanavond de afronding van het install script. Ik zal ook geoptimaliseerde binaries voor rasbian uploaden
 
 A modern implementation of the openzwave library in C++11 which implements a JSON frontend controlled through zeromq who delivers a easy to use socket over TCP, IPC and more. 
 
