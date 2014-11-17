@@ -28,7 +28,14 @@ Todo:
 - Comment and document code
 - Complete the hook system
 
+Installation Raspberry pi:
+-----
+For Rasbian users install this:
+        
+    sudo apt-get install libzmq-dev libudev-dev
 
+When this is done type ./install-rpi.sh in the terminal, it might promt you for your password. When everything ran correctly you should be able to plug in your zwave device and launch up ./ModernOZW and start hacking :)
+ 
 Installation:
 -----
 For ubuntu/debian users install this:
