@@ -99,7 +99,10 @@ int main(int argc, char *argv[])
 #if DEBUG
                 std::cout << "Terminating, the openZWave driver got stuck"
                     << " in a loop and is wasting resources" << std::endl;
+                std::cout << "Restarting" << std::endl;
 #endif
+                execv("/proc/self/exe", nullptr);
+
                 break;
             }
             struct rusage usage;
