@@ -27,7 +27,7 @@ LIBS = ../open-zwave/libopenzwave.so
 all: ModernOZW
 
 ModernOZW:	Main.o jsoncpp/jsoncpp.o
-	$(LD) -o $@ $(LDFLAGS) Main.o jsoncpp/jsoncpp.o $(LIBS) -ldl -lm -lzmq
+	$(CXX) -o $@ $(LDFLAGS) Main.o jsoncpp/jsoncpp.o $(LIBS) -ldl -lm -lzmq
 	
 clean:
 	rm -f ModernOZW *.o
