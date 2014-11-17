@@ -1,7 +1,3 @@
-**Voor de HVA’ers:**
-                
-Ik doe vanavond de afronding van het install script. Ik zal ook geoptimaliseerde binaries voor rasbian uploaden
-
 Modern-openZWave
 ==========
 
@@ -11,22 +7,6 @@ Currently, the data send from the modernozw(modern-openZWave) server are dead si
         
         {'symbol':'zwave', 'home_id':1, 'node_id' : 1, 'value': True}
 Which (suprise, suprise) sets the switch value of node 1 in home 1 to True. Currently we do not support an extensive set of openZWave commands and I highly encourage you to use https://www.domotiga.nl/ or https://code.google.com/p/openzwave-control-panel/ for extensive debugging of the node/home settings. I will however add bindings for the command set in the coming week.
-
-
-Features/Working:
------
-- Getting values from nodes.
-- Setting values in nodes.
-- JSON control through zeromq (see the python directory for receive and set examples).
-- When the zwave adapter is detached we automatically exit, default openzwave implementations do not.
-- Install script for compiling openZWave and Modern-openZWave
-
-
-Todo:
------
-- Test the installation script on Debian, Automate zeromq installation on non archlinux distro's
-- Comment and document code
-- Complete the hook system
 
 Installation Raspberry pi:
 -----
@@ -52,6 +32,23 @@ After installing you have the ModernOZW executable :) The installation (compilat
 like the Raspberry pi.
 
 If you have already installed open-zwave you can copy the compiled directory to the modern-openZWave directory or you can specify the header files and the library in the src/Makefile.
+
+
+Features/Working:
+-----
+- Getting values from nodes.
+- Setting values in nodes.
+- JSON control through zeromq (see the python directory for receive and set examples).
+- When the zwave adapter is detached we automatically exit, default openzwave implementations do not.
+- Install script for compiling openZWave and Modern-openZWave
+
+
+Todo:
+-----
+- Test the installation script on Debian, Automate zeromq installation on non archlinux distro's
+- Comment and document code
+- Complete the hook system
+
 
 
 License:
