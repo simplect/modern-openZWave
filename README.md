@@ -30,11 +30,16 @@ Todo:
 
 Installation Raspberry pi:
 -----
-For Rasbian users install this:
+For Rasbian users do the following steps:
+        
         
     sudo apt-get install libzmq-dev libudev-dev
+    cd ~
+    git clone https://github.com/merijntestroote/modern-openZWave.git
+    cd modern-openZWave/
+    ./install-rpi.sh
 
-When this is done type ./install-rpi.sh in the terminal, it might promt you for your password. When everything ran correctly you should be able to plug in your zwave device and launch up ./ModernOZW and start hacking :)
+It might promt you for your password at different stages. When everything ran correctly you should be able to plug in your zwave device and launch up ./ModernOZW and start hacking :)
  
 Installation:
 -----
