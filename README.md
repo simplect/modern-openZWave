@@ -1,7 +1,3 @@
-**Voor de HVA’ers:**
-                
-Ik doe vanavond de afronding van het install script. Ik zal ook geoptimaliseerde binaries voor rasbian uploaden
-
 Modern-openZWave
 ==========
 
@@ -11,6 +7,31 @@ Currently, the data send from the modernozw(modern-openZWave) server are dead si
         
         {'symbol':'zwave', 'home_id':1, 'node_id' : 1, 'value': True}
 Which (suprise, suprise) sets the switch value of node 1 in home 1 to True. Currently we do not support an extensive set of openZWave commands and I highly encourage you to use https://www.domotiga.nl/ or https://code.google.com/p/openzwave-control-panel/ for extensive debugging of the node/home settings. I will however add bindings for the command set in the coming week.
+
+Installation Raspberry pi:
+-----
+For Rasbian users do the following steps:
+        
+        
+    sudo apt-get install libzmq-dev libudev-dev
+    cd ~
+    git clone https://github.com/merijntestroote/modern-openZWave.git
+    cd modern-openZWave/
+    ./install-rpi.sh
+
+It might promt you for your password at different stages. When everything ran correctly you should be able to plug in your zwave device and launch up ./ModernOZW and start hacking :)
+ 
+Installation:
+-----
+For ubuntu/debian users install this:
+        
+    sudo apt-get install subversion libudev-dev
+
+Then run ./install.sh (this assumes you have sudo installed and sudo rights on the current user). 
+After installing you have the ModernOZW executable :) The installation (compilation) might take some time on devices
+like the Raspberry pi.
+
+If you have already installed open-zwave you can copy the compiled directory to the modern-openZWave directory or you can specify the header files and the library in the src/Makefile.
 
 
 Features/Working:
@@ -28,18 +49,6 @@ Todo:
 - Comment and document code
 - Complete the hook system
 
-
-Installation:
------
-For ubuntu/debian users install this:
-        
-    sudo apt-get install subversion libudev-dev
-
-Then run ./install.sh (this assumes you have sudo installed and sudo rights on the current user). 
-After installing you have the ModernOZW executable :) The installation (compilation) might take some time on devices
-like the Raspberry pi.
-
-If you have already installed open-zwave you can copy the compiled directory to the modern-openZWave directory or you can specify the header files and the library in the src/Makefile.
 
 
 License:
