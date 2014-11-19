@@ -54,7 +54,7 @@ namespace Modernozw {
             }
             try {
                 int homeId = (int)jsonRequest["home_id"].asInt();
-                if(homeId != (int)g_homeId && homeId != 0 && homeId != NULL){
+                if(homeId != (int)g_homeId && homeId != 0 && homeId){
                     continue;
                 }
                 Node * node;

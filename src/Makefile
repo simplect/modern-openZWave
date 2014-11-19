@@ -2,9 +2,9 @@
 
 .SUFFIXES:      .cpp .o .a .s
 
-CC     := $(CROSS_COMPILE)gcc
-CXX    := $(CROSS_COMPILE)g++
-LD     := $(CROSS_COMPILE)g++
+CC     := $(CROSS_COMPILE)gcc-4.8
+CXX    := $(CROSS_COMPILE)g++-4.8
+LD     := $(CROSS_COMPILE)g++-4.8
 AR     := $(CROSS_COMPILE)ar rc
 RANLIB := $(CROSS_COMPILE)ranlib
 
