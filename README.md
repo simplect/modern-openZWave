@@ -49,7 +49,9 @@ Todo:
 - Comment and document code
 - Complete the hook system
 
-
+Contact
+-----
+merijn (a) nullbyte (.) nl
 
 License:
 -----
