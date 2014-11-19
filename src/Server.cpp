@@ -31,7 +31,7 @@ namespace Modernozw {
 
     int startServer()
     {
-        m_ssocket.bind("tcp://127.0.0.1:5555");
+        m_ssocket.bind("tcp://*:5555");
         zmq_setsockopt(m_ssocket, ZMQ_SUBSCRIBE, "", 0);
         m_csocket.bind("tcp://127.0.0.1:5556");
         return 0;
@@ -52,15 +52,19 @@ namespace Modernozw {
             if(!reader.parse(strRequest, jsonRequest)){
                 continue;
             }
+            try {
+                int homeId = (int)jsonRequest["home_id"].asInt();
+                if(homeId != (int)g_homeId && homeId != 0 && homeId != NULL){
+                    continue;
+                }
+                Node * node;
+                if(!(node = getNode(jsonRequest["node_id"].asInt()))){
+                    continue;
+                }
+                node->setValue(jsonRequest["value"].asBool());
+            } catch(std::runtime_error error){
 
-            if(jsonRequest["home_id"].asInt() != (int)g_homeId){
-                continue;
             }
-            Node * node;
-            if(!(node = getNode(jsonRequest["node_id"].asInt()))){
-                continue;
-            }
-            node->setValue(jsonRequest["value"].asBool());
         }
     }
 

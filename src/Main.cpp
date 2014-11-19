@@ -194,7 +194,7 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         {
             //Create a new node and add it with a id to the map
             Modernozw::Node *node = new Modernozw::Node(
-                    notification->GetNodeId(), notification->GetHomeId());
+            notification->GetNodeId(), notification->GetHomeId());
             g_nodes.insert(std::make_pair(node->m_nodeId, node));
             break;
         }

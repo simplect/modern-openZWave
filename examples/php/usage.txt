@@ -1,0 +1,4 @@
+Use this: http://zeromq.org/bindings:php
+For windows just download the installer and follow the instructutions under Windows.
+
+
