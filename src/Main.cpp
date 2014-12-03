@@ -44,6 +44,13 @@
 #include "ValueStore.h"
 #include "Value.h"
 #include "ValueBool.h"
+
+#if DEBUG
+#define printd(string) std::cout << string << std::endl;
+#else
+#define ptintd(string)
+#endif
+
 void cvlueChanged(const OpenZWave::Notification * notification);
 
 using namespace Modernozw;
@@ -74,7 +81,7 @@ int main(int argc, char *argv[])
 
     if(!g_initFailed){
         std::cout << "Sucessfully initialized OpenZWave" << std::endl;
-        sendMessage(0, g_homeId, "init", "init", "true");
+        sendString(0, g_homeId, "init", "init", "true");
         //Write the config
         Manager::Get()->WriteConfig(g_homeId);
         Driver::DriverData data;
@@ -165,11 +172,13 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
             if(auto node = getNode(notification->GetNodeId())){
                 node->m_values.push_back(notification->GetValueID());
             }
+            std::cout << "Value added" << std::endl;
             break;
         }
 
         case Notification::Type_ValueRemoved:
         {
+            std::cout << "Value removed" << std::endl;
             if(auto node = getNode(notification->GetNodeId())){
                 for(auto it = node->m_values.begin(); it != node->m_values.end(); ++it){
                     if((*it) == notification->GetValueID()){
@@ -183,6 +192,7 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
 
         case Notification::Type_ValueChanged:
         {
+            printd("Value changed");
             if(auto node = getNode(notification->GetNodeId())){
                 node->valueChanged(notification);
                 break;
@@ -192,6 +202,8 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
 
         case Notification::Type_NodeAdded:
         {
+            printd("Node added");
+
             //Create a new node and add it with a id to the map
             Modernozw::Node *node = new Modernozw::Node(
             notification->GetNodeId(), notification->GetHomeId());
@@ -201,17 +213,20 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
 
         case Notification::Type_NodeRemoved:
         {
+            printd("Node removed");
             //Remove the node from our list
             auto node = g_nodes.find(notification->GetNodeId());
             if(node != g_nodes.end()){
-                delete &node;
                 g_nodes.erase(node);
+                //delete &node;
+
             }
             break;
         }
 
         case Notification::Type_NodeEvent:
         {
+            printd("Node event");
             if(auto node = getNode(notification->GetNodeId())){
                 node->nodeEvent(notification);
             }
@@ -238,6 +253,7 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         }
         case Notification::Type_DriverFailed:
         {
+            std::cout << "Driver failed" << std::endl;
             g_initFailed = true;
             g_condInit.notify_all();
             break;
@@ -245,12 +261,15 @@ void onNotification(OpenZWave::Notification const* notification, void* context)
         case Notification::Type_AwakeNodesQueried:
         case Notification::Type_AllNodesQueried:
         {
+            printd("allqueried");
             g_condInit.notify_all();
             break;
         }
         default:
         {
-
+#if DEBUG
+            std::cout << "Unhandled notification with id: " << notification->GetType() << std::endl;
+#endif
         }
 
     }

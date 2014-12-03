@@ -23,19 +23,33 @@
 #define _SERVER_HEADER
 
 #include <zmq.hpp>
+#include <json/json.h>
 
 namespace Modernozw {
     int startServer();
-    void sendMessage(
+
+    void sendJson(Json::Value message);
+    void sendString(
             uint8_t nodeId,
             uint32_t homeId,
             std::string type,
             std::string name,
             std::string value);
+    void sendValue(
+            uint8_t nodeId,
+            uint32_t homeId,
+            std::string type,
+            OpenZWave::ValueID value);
+    void sendInt(
+            uint8_t nodeId,
+            uint32_t homeId,
+            std::string type,
+            std::string name,
+            uint8_t value);
 
-        zmq::context_t context (1);
-        zmq::socket_t m_ssocket (context, ZMQ_SUB);
-        zmq::socket_t m_csocket (context, ZMQ_PUB);
+        zmq::context_t context(1);
+        zmq::socket_t m_ssocket(context, ZMQ_SUB);
+        zmq::socket_t m_csocket(context, ZMQ_PUB);
 
 }
 #endif

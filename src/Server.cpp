@@ -43,9 +43,11 @@ namespace Modernozw {
             zmq::message_t request;
             m_ssocket.recv(&request);
             char* strRequest = (char*)request.data();
+
 #if DEBUG
             std::cout << "Received " << strRequest << std::endl;
 #endif
+
             Json::Value jsonRequest;
             Json::Reader reader;
             //parse the request, if invalid drop it
@@ -68,27 +70,103 @@ namespace Modernozw {
         }
     }
 
-    void sendMessage(
+    void sendJson(Json::Value message)
+    {
+        Json::FastWriter writer;
+        std::string jsonMessage = writer.write(message);
+#if DEBUG
+        std::cout << jsonMessage;
+#endif
+        zmq::message_t zmqMessage(jsonMessage.length());
+        memcpy((void*)zmqMessage.data(), jsonMessage.c_str(), jsonMessage.length());
+        m_csocket.send(zmqMessage);
+    }
+
+    void sendString(
             uint8_t nodeId,
             uint32_t homeId,
             std::string type,
             std::string name,
             std::string value)
     {
-            Json::Value message;
-            message["node_id"] = nodeId;
-            message["home_id"] = homeId;
-            message["type"] = type;
-            message["name"] = name;
-            message["value"] = value;
-            message["symbol"] = "zwave";
-            Json::FastWriter writer;
-            std::string jsonMessage = writer.write(message);
-#if DEBUG
-            std::cout << jsonMessage;
-#endif
-            zmq::message_t zmqMessage(jsonMessage.length());
-            memcpy((void*)zmqMessage.data(), jsonMessage.c_str(), jsonMessage.length());
-            m_csocket.send(zmqMessage);
+        using namespace OpenZWave;
+        Json::Value message;
+        message["node_id"] = nodeId;
+        message["home_id"] = homeId;
+        message["type"] = type;
+        message["name"] = name;
+        message["value"] = value;
+        message["symbol"] = "zwave";
+
+        sendJson(message);
     }
+
+    void sendInt(
+            uint8_t nodeId,
+            uint32_t homeId,
+            std::string type,
+            std::string name,
+            uint8_t value)
+    {
+        using namespace OpenZWave;
+        Json::Value message;
+        message["node_id"] = nodeId;
+        message["home_id"] = homeId;
+        message["type"] = type;
+        message["name"] = name;
+        message["valuetype"] = "int";
+        message["value"] = value;
+        message["symbol"] = "zwave";
+
+        sendJson(message);
+    }
+
+
+
+    void sendValue(
+            uint8_t nodeId,
+            uint32_t homeId,
+            std::string type,
+            OpenZWave::ValueID value)
+    {
+        using namespace OpenZWave;
+        Json::Value message;
+        message["node_id"] = nodeId;
+        message["home_id"] = homeId;
+        message["type"] = type;
+        message["name"] = Manager::Get()->GetValueLabel(value);
+        message["symbol"] = "zwave";
+
+        switch(value.GetType()){
+            case ValueID::ValueType::ValueType_Int:
+                message["valuetype"] = "int";
+                int tempint;
+                Manager::Get()->GetValueAsInt(value, &tempint);
+                message["value"] = tempint;
+                break;
+            case ValueID::ValueType::ValueType_Bool:
+                message["valuetype"] = "bool";
+                bool tempbool;
+                Manager::Get()->GetValueAsBool(value, &tempbool);
+                message["value"] = tempbool;
+                break;
+            case ValueID::ValueType::ValueType_Decimal:
+                message["valuetype"] = "float";
+                float tempfloat;
+                Manager::Get()->GetValueAsFloat(value, &tempfloat);
+                message["value"] = tempfloat;
+                break;
+            case ValueID::ValueType::ValueType_String:
+            default:
+                message["valuetype"] = "string";
+                std::string tempstr;
+                Manager::Get()->GetValueAsString(value, &tempstr);
+                message["value"] = tempstr;
+
+        }
+
+        sendJson(message);
+    }
+
+
 }

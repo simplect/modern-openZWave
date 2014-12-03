@@ -46,32 +46,31 @@ namespace Modernozw {
 
     void Node::nodeEvent(const OpenZWave::Notification *notification)
     {
-        std::stringstream value;
-        value << (int)notification->GetEvent();
-        sendMessage(m_nodeId, m_homeId, "event", "", value.str());
+        sendInt(m_nodeId,
+                m_homeId,
+                "event",
+                OpenZWave::Manager::Get()->GetValueLabel(notification->GetValueID()),
+                (uint8_t)notification->GetEvent());
     }
 
     void Node::valueChanged(const OpenZWave::Notification *notification)
     {
         using namespace OpenZWave;
         ValueID value = notification->GetValueID();
-        //Remove the old value
+        /*Remove the old value
         for(auto it = m_values.begin(); it != m_values.end(); ++it){
             if((*it) == notification->GetValueID()){
                 m_values.erase(it);
                 break;
             }
-        }
-        m_values.push_back(value);
+        }*/
+        //m_values.push_back(value);
 
-        std::string valueString = "";
-        Manager::Get()->GetValueAsString(value, &valueString);
-        sendMessage(
+        sendValue(
                 m_nodeId,
                 m_homeId,
                 "valuechanged",
-                Manager::Get()->GetValueLabel(value),
-                valueString);
+                value);
     }
 
     void Node::setValue(uint8_t value)
