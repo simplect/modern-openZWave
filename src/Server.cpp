@@ -44,6 +44,11 @@ namespace Modernozw {
             m_ssocket.recv(&request);
             char* strRequest = (char*)request.data();
 
+            char* pos = strchr(strRequest, '}');
+            if(pos == nullptr)
+                continue;
+
+            *(pos+1) = '\0';
 #if DEBUG
             std::cout << "Received " << strRequest << std::endl;
 #endif
