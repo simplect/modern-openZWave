@@ -48,8 +48,9 @@ namespace Modernozw {
             uint8_t value);
 
         zmq::context_t context(1);
-        zmq::socket_t m_ssocket(context, ZMQ_SUB);
+        zmq::socket_t m_ssocket(context, ZMQ_REP);
         zmq::socket_t m_csocket(context, ZMQ_PUB);
+        zmq::message_t  * m_okayMessage;
 
 }
 #endif

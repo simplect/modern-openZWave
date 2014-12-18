@@ -32,8 +32,12 @@ namespace Modernozw {
     int startServer()
     {
         m_ssocket.bind("tcp://*:5555");
-        zmq_setsockopt(m_ssocket, ZMQ_SUBSCRIBE, "", 0);
         m_csocket.bind("tcp://127.0.0.1:5556");
+
+        //create okay message
+        std::string okayMessage = "{\"status\" : \"okay\"}";
+        m_okayMessage = new zmq::message_t(okayMessage.length());
+        memcpy((void*)m_okayMessage->data(), okayMessage.c_str(), okayMessage.length());
         return 0;
     }
 
@@ -42,6 +46,7 @@ namespace Modernozw {
         while(true){
             zmq::message_t request;
             m_ssocket.recv(&request);
+            std::cout << "received";
             char* strRequest = (char*)request.data();
 
             char* pos = strchr(strRequest, '}');
@@ -52,6 +57,8 @@ namespace Modernozw {
 #if DEBUG
             std::cout << "Received " << strRequest << std::endl;
 #endif
+            //Tell the client that we have received their message
+            m_ssocket.send(*m_okayMessage);
 
             Json::Value jsonRequest;
             Json::Reader reader;
