@@ -4,19 +4,25 @@ $data = array("node_id" => 8, "value" => false);
 
 $context = new ZMQContext(1);
 
-$publisher = new ZMQSocket($context, ZMQ::SOCKET_PUB);
-$publisher->connect("tcp://127.0.0.1:5555");
+$socket = new ZMQSocket($context, ZMQ::SOCKET_REQ);
+$socket->connect("tcp://127.0.0.1:5555");
 
 //Wait 1 second to make sure we are connected. We don't need to do this on every call!
 sleep(1);
-echo 'sending: ' . json_encode($data) . "\n";
+$socket->send(json_encode(array("node_id" => 12, "value" => false)));
 
-$publisher->send(json_encode($data));
+$response = json_decode($socket->recv(), true);
+if(!isset($response["status"]) || $response["status"] != "okay"){
+    echo 'The server did not correctly receive the message';
+}
 
 //For demonstation purpose wait another second
-
 sleep(1);
-$data["value"] = true;
 
-echo 'sending: ' . json_encode($data) . "\n";
-$publisher->send(json_encode($data));
+$socket->send(json_encode(array("node_id" => 12, "value" => true)));
+
+$response = json_decode($socket->recv(), true);
+if(!isset($response["status"]) || $response["status"] != "okay"){
+    echo 'The server did not correctly receive the message';
+}
+

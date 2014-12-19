@@ -73,13 +73,13 @@ namespace Modernozw {
                 value);
     }
 
-    void Node::setValue(uint8_t value)
+    void Node::setValue(int32_t value)
     {
         using namespace OpenZWave;
         for (auto it = m_values.begin(); it != m_values.end(); ++it) {
             ValueID valueId = *it;
             if (valueId.GetCommandClassId() == 0x25) {
-                Manager::Get()->SetValue(valueId, true);
+                Manager::Get()->SetValue(valueId, value);
                 break;
             }
         }

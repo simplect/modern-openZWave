@@ -45,7 +45,7 @@ namespace Modernozw {
             void nodeEvent(const OpenZWave::Notification *notification);
             void valueChanged(const OpenZWave::Notification *notification);
             //Setters
-            void setValue(uint8_t value);
+            void setValue(int32_t value);
             void setValue(bool value);
     };
 

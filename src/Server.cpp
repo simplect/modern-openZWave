@@ -35,10 +35,8 @@ namespace Modernozw {
         m_csocket.bind("tcp://127.0.0.1:5556");
 
         //create okay message
-        std::string okayMessage = "{\"status\" : \"okay\"}";
-        m_okayMessage = new zmq::message_t(okayMessage.length());
-        memcpy((void*)m_okayMessage->data(), okayMessage.c_str(), okayMessage.length());
-        return 0;
+
+               return 0;
     }
 
     void serverThread()
@@ -57,8 +55,15 @@ namespace Modernozw {
 #if DEBUG
             std::cout << "Received " << strRequest << std::endl;
 #endif
+            //zmq consumes its messages so we need to recreate it
+            std::string okayString = "{\"status\" : \"okay\"}";
+            zmq::message_t okayMessage(okayString.length());
+            memcpy((void*)okayMessage.data(),
+                    okayString.c_str(),
+                    okayString.length());
+
             //Tell the client that we have received their message
-            m_ssocket.send(*m_okayMessage);
+            m_ssocket.send(okayMessage);
 
             Json::Value jsonRequest;
             Json::Reader reader;
@@ -75,9 +80,19 @@ namespace Modernozw {
                 if(!(node = getNode(jsonRequest["node_id"].asInt()))){
                     continue;
                 }
+                if(!jsonRequest["value"]){
+                    continue;
+                }
+                if(jsonRequest["value"].isInt()){
+                    node->setValue(jsonRequest["value"].asInt());
+                    continue;
+                }
                 node->setValue(jsonRequest["value"].asBool());
-            } catch(std::runtime_error error){
 
+            } catch(std::runtime_error error){
+#if DEBUG
+                std::cout << "Got a runtime error.. " << std::endl;
+#endif
             }
         }
     }
