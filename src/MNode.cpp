@@ -73,24 +73,24 @@ namespace Modernozw {
                 value);
     }
 
-    void Node::setValue(int32_t value)
+    void Node::setValue(int32_t value, uint8_t commandClassId)
     {
         using namespace OpenZWave;
         for (auto it = m_values.begin(); it != m_values.end(); ++it) {
             ValueID valueId = *it;
-            if (valueId.GetCommandClassId() == 0x25) {
+            if (valueId.GetCommandClassId() == commandClassId) {
                 Manager::Get()->SetValue(valueId, value);
                 break;
             }
         }
     }
 
-    void Node::setValue(bool value)
+    void Node::setValue(bool value, uint8_t commandClassId)
     {
         using namespace OpenZWave;
         for (auto it = m_values.begin(); it != m_values.end(); ++it) {
             ValueID valueId = *it;
-            if (valueId.GetCommandClassId() == 0x25) {
+            if (valueId.GetCommandClassId() == commandClassId) {
                 Manager::Get()->SetValue(valueId, value);
                 break;
             }
@@ -120,7 +120,7 @@ namespace Modernozw {
         Node * node = getNode(nodeId);
         if(node == nullptr)
             return;
-        node->setValue(value);
+        node->setValue(value, 0x25);
         g_criticalSection.unlock();
     }
 
@@ -130,7 +130,7 @@ namespace Modernozw {
         Node * node = getNode(nodeId);
         if(node == nullptr)
             return;
-        node->setValue(value);
+        node->setValue(value, 0x25);
         g_criticalSection.unlock();
     }
 }

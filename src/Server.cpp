@@ -83,11 +83,15 @@ namespace Modernozw {
                 if(!jsonRequest["value"]){
                     continue;
                 }
+                uint8_t commandClassId;
+                if(!(commandClassId = jsonRequest["command_class"].asInt())){
+                    commandClassId = 0x25;
+                }
                 if(jsonRequest["value"].isInt()){
-                    node->setValue(jsonRequest["value"].asInt());
+                    node->setValue(jsonRequest["value"].asInt(), commandClassId);
                     continue;
                 }
-                node->setValue(jsonRequest["value"].asBool());
+                node->setValue(jsonRequest["value"].asBool(), commandClassId);
 
             } catch(std::runtime_error error){
 #if DEBUG
