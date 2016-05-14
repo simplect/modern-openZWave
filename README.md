@@ -1,3 +1,5 @@
+Note: This project is discontinued and the code remains here for example/learning purposes.
+
 Modern-openZWave
 ==========
 
